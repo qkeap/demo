@@ -40,3 +40,12 @@ jobs:
 
       # run tests!
       - run: gradle test
+
+  deploy:
+    docker:
+      - image: google/cloud-sdk
+
+      steps:
+        - run: |
+            echo $GOOGLE_AUTH_JSON | base64 -D >> ~/.google-auth.json
+            gcloud auth activate-service-account --key-file=~/.google-auth.json
