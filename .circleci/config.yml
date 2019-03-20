@@ -2,6 +2,15 @@
 #
 # Check https://circleci.com/docs/2.0/language-java/ for more details
 #
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+
 version: 2
 jobs:
   build:
@@ -43,9 +52,11 @@ jobs:
 
   deploy:
     docker:
-      - image: google/cloud-sdk
+      - image: qkeap/google-cloud-sdk-with-gradle
 
       steps:
         - run: |
-            echo $GOOGLE_AUTH_JSON | base64 -D >> ~/.google-auth.json
-            gcloud auth activate-service-account --key-file=~/.google-auth.json
+            echo $GOOGLE_AUTH_JSON | base64 -D >> /tmp/q-google-auth.json
+            gcloud auth activate-service-account --key-file=/tmp/q-google-auth.json
+            gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+            gradle appengineDeploy
