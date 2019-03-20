@@ -54,7 +54,10 @@ jobs:
     docker:
       - image: qkeap/google-cloud-sdk-with-gradle
 
+    working_directory: ~/repo
+
     steps:
+      - checkout
       - run: |
           echo $GOOGLE_AUTH_JSON | base64 -d >> /tmp/q-google-auth.json
           gcloud auth activate-service-account --key-file=/tmp/q-google-auth.json
