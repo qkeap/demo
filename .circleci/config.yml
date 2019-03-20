@@ -56,7 +56,7 @@ jobs:
 
     steps:
       - run: |
-          echo $GOOGLE_AUTH_JSON | base64 -D >> /tmp/q-google-auth.json
+          echo $GOOGLE_AUTH_JSON | base64 -d >> /tmp/q-google-auth.json
           gcloud auth activate-service-account --key-file=/tmp/q-google-auth.json
           gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
           gradle appengineDeploy
