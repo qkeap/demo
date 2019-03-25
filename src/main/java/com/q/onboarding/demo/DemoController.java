@@ -10,21 +10,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class DemoController {
-  private ITaskService _taskService;
+  private ITaskService taskService;
 
-  public DemoController(ITaskService taskService){
-    _taskService = taskService;
+  public DemoController(ITaskService taskService) {
+    this.taskService = taskService;
   }
 
   @PostMapping("/tasks")
   public Task AddTaskToContact(
-      @RequestParam(defaultValue = "5") int contactId,
-      @RequestParam(required = false) Task task) {
-    return _taskService.AddTaskToContact(contactId, task);
+      @RequestParam(defaultValue = "5") int contactId, @RequestParam(required = false) Task task) {
+    return taskService.AddTaskToContact(contactId, task);
   }
 
   @RequestMapping("/tasks/{contactId}")
-  public Task[] GetTasksForContact(@PathVariable int contactId){
-    return _taskService.GetTasksForContact(contactId);
+  public Task[] GetTasksForContact(@PathVariable int contactId) {
+    return taskService.GetTasksForContact(contactId);
   }
 }
