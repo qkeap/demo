@@ -7,7 +7,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,32 +15,33 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthController {
   private IAuthService authService;
-  private Environment environment;
+  private EnvironmentVars vars;
 
-  public AuthController(IAuthService authService, Environment environment) {
+  public AuthController(IAuthService authService, EnvironmentVars vars) {
     this.authService = authService;
-    this.environment = environment;
+    this.vars = vars;
   }
 
   @RequestMapping("/authorize")
   public void Authorize(HttpServletResponse response) {
-    String authorizationUri = environment.getProperty("AUTH_URI");
-    String redirectUri = environment.getProperty("AUTH_REDIRECT_URI");
-    String clientId = environment.getProperty("AUTH_CLIENT_ID");
-    response.setHeader(
-        "Location",
+    String authorizationUri = vars.getAuthUri();
+    String redirectUri = vars.getAuthRedirectUri();
+    String clientId = vars.getAuthClientId();
+    authorizationUri =
         authorizationUri
             + "/redirect_uri="
             + redirectUri
             + "&response_type=code&client_id="
-            + clientId);
+            + clientId;
+    System.out.println("uri: " + authorizationUri);
+    response.setHeader("Location", authorizationUri);
     response.setStatus(302);
   }
 
   @PostMapping("/oauth_callback")
   public String OAuthCallback(@RequestParam() String code) throws IOException {
-    String clientId = environment.getProperty("AUTH_CLIENT_ID");
-    String clientSecret = environment.getProperty("AUTH_CLIENT_SECRET");
+    String clientId = vars.getAuthClientId();
+    String clientSecret = vars.getAuthClientSecret();
     OAuthCredentials credentials = authService.RequestAccessToken(clientId, clientSecret, code);
     Files.write(
         Paths.get("~/.is-credentials"),
