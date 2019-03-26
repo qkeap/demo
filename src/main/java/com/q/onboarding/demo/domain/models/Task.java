@@ -1,4 +1,4 @@
-package com.q.onboarding.demo.models;
+package com.q.onboarding.demo.domain.models;
 
 public class Task {
   private int Id;

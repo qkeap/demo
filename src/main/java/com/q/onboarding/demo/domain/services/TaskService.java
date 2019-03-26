@@ -1,11 +1,10 @@
-package com.q.onboarding.demo.services;
+package com.q.onboarding.demo.domain.services;
 
-import com.q.onboarding.demo.models.Task;
+import com.q.onboarding.demo.domain.models.Task;
 
 public class TaskService implements ITaskService {
 
-  @Override
-  public Task AddTaskToContact(int contactId, Task task) {
+  public Task AddTask(Task task, String token) {
     return new Task(1000, "Test Task", false);
   }
 
