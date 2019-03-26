@@ -1,43 +1,35 @@
 package com.q.onboarding.demo.api;
 
-import com.q.onboarding.demo.domain.models.Task;
-import com.q.onboarding.demo.domain.services.ITaskService;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.q.onboarding.demo.domain.services.TaskService;
+import java.util.Map;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class TaskController {
-  private ITaskService taskService;
+  private TaskService taskService;
 
-  public TaskController(ITaskService taskService) {
+  public TaskController(TaskService taskService) {
     this.taskService = taskService;
   }
 
   @PostMapping("/task")
-  public Task AddTaskToContact(
-      HttpServletRequest request,
-      HttpServletResponse response,
-      @RequestParam(required = false) Task task) {
-
-    String authorization = request.getHeader("Authorization");
-    if (null == authorization
-        || authorization.trim().length() <= 0
-        || !authorization.contains(" ")) {
-      response.setStatus(401);
-      return null;
-    }
-    String token = authorization.split(" ")[1];
-
-    return taskService.AddTask(task, token);
+  public ResponseEntity<?> addTask(
+      @RequestHeader(value = "Authorization") String authorization,
+      @RequestBody Map<String, String> parameters) {
+    ResponseEntity<?> taskResponse = taskService.addTask(parameters, authorization);
+    return taskResponse;
   }
 
   @RequestMapping("/task/contact/{contactId}")
-  public Task[] GetTasksForContact(@PathVariable int contactId) {
-    return taskService.GetTasksForContact(contactId);
+  public ResponseEntity<?> getTasksForContact(
+      @RequestHeader(value = "Authorization") String authorization, @PathVariable int contactId) {
+
+    return taskService.getTasksForContact(contactId, authorization);
   }
 }
