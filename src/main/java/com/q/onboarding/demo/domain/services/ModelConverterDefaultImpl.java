@@ -10,30 +10,30 @@ import org.springframework.stereotype.Service;
 public class ModelConverterDefaultImpl implements ModelConverter {
 
   @Override
-  public Task ConvertTaskDTOToDomainModel(TaskDTO dto) {
+  public Task convertTaskDTOToDomainModel(TaskDTO dto) {
     return new Task(
         dto.getId(),
         dto.getTitle(),
         dto.isCompleted(),
-        ConvertContactDTOToDomainModel(dto.getContact()));
+        convertContactDTOToDomainModel(dto.getContact()));
   }
 
   @Override
-  public Contact ConvertContactDTOToDomainModel(ContactDTO dto) {
+  public Contact convertContactDTOToDomainModel(ContactDTO dto) {
     return new Contact(dto.getId(), dto.getEmail(), dto.getFirstName(), dto.getLastName());
   }
 
   @Override
-  public TaskDTO ConvertTaskDomainModelToDTO(Task model) {
+  public TaskDTO convertTaskDomainModelToDTO(Task model) {
     return new TaskDTO(
         model.getId(),
         model.getTitle(),
         model.isCompleted(),
-        ConvertContactDomainModelToDTO(model.getContact()));
+        convertContactDomainModelToDTO(model.getContact()));
   }
 
   @Override
-  public ContactDTO ConvertContactDomainModelToDTO(Contact model) {
+  public ContactDTO convertContactDomainModelToDTO(Contact model) {
     return new ContactDTO(
         model.getId(), model.getEmail(), model.getFirstName(), model.getLastName());
   }

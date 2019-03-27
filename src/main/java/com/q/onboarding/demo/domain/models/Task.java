@@ -6,7 +6,7 @@ public class Task {
   private boolean completed;
   private Contact contact;
 
-  public Task() { }
+  public Task() {}
 
   public Task(long id, String title, boolean completed, Contact contact) {
 

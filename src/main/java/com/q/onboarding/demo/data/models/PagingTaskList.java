@@ -6,8 +6,7 @@ import java.util.List;
 public class PagingTaskList {
   private List<Task> tasks;
 
-  public PagingTaskList() {
-  }
+  public PagingTaskList() {}
 
   public List<Task> getTasks() {
     return tasks;

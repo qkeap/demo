@@ -28,9 +28,9 @@ public class TaskController {
   public ResponseEntity<TaskDTO> addTask(
       @RequestHeader(value = "Authorization") String authorization, TaskDTO taskDTO) {
     Task task =
-        taskService.addTask(modelConverter.ConvertTaskDTOToDomainModel(taskDTO), authorization);
+        taskService.addTask(modelConverter.convertTaskDTOToDomainModel(taskDTO), authorization);
     return new ResponseEntity<>(
-        modelConverter.ConvertTaskDomainModelToDTO(task), HttpStatus.CREATED);
+        modelConverter.convertTaskDomainModelToDTO(task), HttpStatus.CREATED);
   }
 
   @RequestMapping("/task/{contactId}")
@@ -39,7 +39,7 @@ public class TaskController {
 
     return new ResponseEntity<>(
         taskService.getTasksForContact(contactId, authorization).stream()
-            .map(task -> modelConverter.ConvertTaskDomainModelToDTO(task))
+            .map(task -> modelConverter.convertTaskDomainModelToDTO(task))
             .collect(Collectors.toList()),
         HttpStatus.OK);
   }

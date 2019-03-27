@@ -3,7 +3,6 @@ package com.q.onboarding.demo.data.services;
 import com.q.onboarding.demo.data.models.PagingTaskList;
 import com.q.onboarding.demo.domain.models.Task;
 import com.q.onboarding.demo.domain.services.TaskService;
-import java.util.Arrays;
 import java.util.List;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -30,8 +29,9 @@ public class InfusionsoftTaskService implements TaskService {
     HttpHeaders headers = new HttpHeaders();
     headers.set("Authorization", authorization);
     HttpEntity<?> request = new HttpEntity<>(headers);
-    ResponseEntity<PagingTaskList> response = restTemplate.exchange(
-        apiUri + "?contact_id=" + contactId, HttpMethod.GET, request, PagingTaskList.class);
+    ResponseEntity<PagingTaskList> response =
+        restTemplate.exchange(
+            apiUri + "?contact_id=" + contactId, HttpMethod.GET, request, PagingTaskList.class);
     return response.getBody().getTasks();
   }
 }

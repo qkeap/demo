@@ -6,8 +6,11 @@ import com.q.onboarding.demo.domain.models.Contact;
 import com.q.onboarding.demo.domain.models.Task;
 
 public interface ModelConverter {
-  Task ConvertTaskDTOToDomainModel(TaskDTO dto);
-  Contact ConvertContactDTOToDomainModel(ContactDTO dto);
-  TaskDTO ConvertTaskDomainModelToDTO(Task model);
-  ContactDTO ConvertContactDomainModelToDTO(Contact model);
+  Task convertTaskDTOToDomainModel(TaskDTO dto);
+
+  Contact convertContactDTOToDomainModel(ContactDTO dto);
+
+  TaskDTO convertTaskDomainModelToDTO(Task model);
+
+  ContactDTO convertContactDomainModelToDTO(Contact model);
 }
