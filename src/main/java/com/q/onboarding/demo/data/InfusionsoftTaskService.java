@@ -1,13 +1,16 @@
 package com.q.onboarding.demo.data;
 
+import com.q.onboarding.demo.domain.services.TaskService;
 import java.util.Map;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-public class TaskService implements com.q.onboarding.demo.domain.services.TaskService {
+@Service
+public class InfusionsoftTaskService implements TaskService {
 
   private final String apiUri = "https://api.infusionsoft.com/crm/rest/v1/tasks";
 

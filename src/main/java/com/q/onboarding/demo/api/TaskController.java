@@ -26,7 +26,7 @@ public class TaskController {
     return taskResponse;
   }
 
-  @RequestMapping("/task/contact/{contactId}")
+  @RequestMapping("/task/{contactId}")
   public ResponseEntity<?> getTasksForContact(
       @RequestHeader(value = "Authorization") String authorization, @PathVariable int contactId) {
 
