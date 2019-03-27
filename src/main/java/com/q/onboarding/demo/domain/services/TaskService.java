@@ -1,9 +1,9 @@
 package com.q.onboarding.demo.domain.services;
 
-import java.util.Map;
-import org.springframework.http.ResponseEntity;
+import com.q.onboarding.demo.domain.models.Task;
+import java.util.List;
 
 public interface TaskService {
-  ResponseEntity<?> addTask(Map<String, String> task, String authorization);
-  ResponseEntity<?> getTasksForContact(int contactId, String authorization);
+  Task addTask(Task task, String authorization);
+  List<Task> getTasksForContact(long contactId, String authorization);
 }
