@@ -32,6 +32,6 @@ public class InfusionsoftTaskService implements TaskService {
     HttpEntity<?> request = new HttpEntity<>(headers);
     ResponseEntity<PagingTaskList> response = restTemplate.exchange(
         apiUri + "?contact_id=" + contactId, HttpMethod.GET, request, PagingTaskList.class);
-    return Arrays.asList(response.getBody().getTasks());
+    return response.getBody().getTasks();
   }
 }

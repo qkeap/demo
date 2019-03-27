@@ -11,7 +11,11 @@ public class ModelConverterDefaultImpl implements ModelConverter {
 
   @Override
   public Task ConvertTaskDTOToDomainModel(TaskDTO dto) {
-    return new Task(dto.getId(), dto.getTitle(), dto.isCompleted(), ConvertContactDTOToDomainModel(dto.getContact()));
+    return new Task(
+        dto.getId(),
+        dto.getTitle(),
+        dto.isCompleted(),
+        ConvertContactDTOToDomainModel(dto.getContact()));
   }
 
   @Override
@@ -21,11 +25,16 @@ public class ModelConverterDefaultImpl implements ModelConverter {
 
   @Override
   public TaskDTO ConvertTaskDomainModelToDTO(Task model) {
-    return new TaskDTO(model.getId(), model.getTitle(), model.isCompleted(), ConvertContactDomainModelToDTO(model.getContact()));
+    return new TaskDTO(
+        model.getId(),
+        model.getTitle(),
+        model.isCompleted(),
+        ConvertContactDomainModelToDTO(model.getContact()));
   }
 
   @Override
   public ContactDTO ConvertContactDomainModelToDTO(Contact model) {
-    return new ContactDTO(model.getId(), model.getEmail(), model.getFirstName(), model.getLastName());
+    return new ContactDTO(
+        model.getId(), model.getEmail(), model.getFirstName(), model.getLastName());
   }
 }
