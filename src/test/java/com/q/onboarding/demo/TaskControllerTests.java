@@ -11,7 +11,6 @@ import com.q.onboarding.demo.api.models.TaskDTO;
 import com.q.onboarding.demo.domain.models.Task;
 import com.q.onboarding.demo.domain.services.ModelConverter;
 import com.q.onboarding.demo.domain.services.TaskService;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Assert;
