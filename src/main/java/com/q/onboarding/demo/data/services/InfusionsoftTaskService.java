@@ -7,20 +7,23 @@ import java.util.List;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
 public class InfusionsoftTaskService implements TaskService {
-  private final String apiUri = "https://api.infusionsoft.com/crm/rest/v1/tasks";
+  private static final String API_URI = "https://api.infusionsoft.com/crm/rest/v1/tasks";
 
   public Task addTask(Task task, String authorization) {
     RestTemplate restTemplate = new RestTemplate();
     HttpHeaders headers = new HttpHeaders();
     headers.set("Authorization", authorization);
-    HttpEntity<?> request = new HttpEntity<>(task, headers);
-    ResponseEntity<Task> response = restTemplate.postForEntity(apiUri, request, Task.class);
+    headers.setContentType(MediaType.APPLICATION_JSON);
+    HttpEntity<Task> request = new HttpEntity<>(task, headers);
+    ResponseEntity<Task> response =
+        restTemplate.exchange(API_URI, HttpMethod.POST, request, Task.class);
     return response.getBody();
   }
 
@@ -31,7 +34,10 @@ public class InfusionsoftTaskService implements TaskService {
     HttpEntity<?> request = new HttpEntity<>(headers);
     ResponseEntity<PagingTaskList> response =
         restTemplate.exchange(
-            apiUri + "?completed=false&contact_id=" + contactId, HttpMethod.GET, request, PagingTaskList.class);
+            API_URI + "?completed=false&contact_id=" + contactId,
+            HttpMethod.GET,
+            request,
+            PagingTaskList.class);
     return response.getBody().getTasks();
   }
 }

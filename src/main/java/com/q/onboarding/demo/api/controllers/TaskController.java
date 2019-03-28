@@ -6,12 +6,14 @@ import com.q.onboarding.demo.domain.services.ModelConverter;
 import com.q.onboarding.demo.domain.services.TaskService;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -26,16 +28,17 @@ public class TaskController {
 
   @PostMapping("/task")
   public ResponseEntity<TaskDTO> addTask(
-      @RequestHeader(value = "Authorization") String authorization, TaskDTO taskDTO) {
+      @RequestHeader(value = "Authorization") String authorization,
+      @Valid @RequestBody TaskDTO taskDTO) {
     Task task =
         taskService.addTask(modelConverter.convertTaskDTOToDomainModel(taskDTO), authorization);
     return new ResponseEntity<>(
         modelConverter.convertTaskDomainModelToDTO(task), HttpStatus.CREATED);
   }
 
-  @RequestMapping("/task/{contactId}")
+  @RequestMapping("/task")
   public ResponseEntity<List<TaskDTO>> getTasksForContact(
-      @RequestHeader(value = "Authorization") String authorization, @PathVariable long contactId) {
+      @RequestHeader(value = "Authorization") String authorization, @RequestParam long contactId) {
 
     return new ResponseEntity<>(
         taskService.getTasksForContact(contactId, authorization).stream()
