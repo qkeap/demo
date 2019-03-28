@@ -1,21 +1,23 @@
 package com.q.onboarding.demo.api.models;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class TaskDTO {
-  private long id;
-  private String title;
+  @NotBlank private String title;
   private boolean completed;
+
+  @NotNull @Valid
   private ContactDTO contact;
 
-  public TaskDTO(long id, String title, boolean completed, ContactDTO contact) {
+  public TaskDTO() {}
 
-    this.id = id;
+  public TaskDTO(String title, boolean completed, ContactDTO contact) {
+
     this.title = title;
     this.completed = completed;
     this.contact = contact;
-  }
-
-  public long getId() {
-    return id;
   }
 
   public String getTitle() {

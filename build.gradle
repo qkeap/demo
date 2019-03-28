@@ -43,6 +43,7 @@ apply plugin: 'io.spring.dependency-management'
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'javax.validation:validation-api'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     compile 'com.google.appengine:appengine-api-1.0-sdk:+'  // Latest App Engine Api's

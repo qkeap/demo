@@ -4,15 +4,14 @@ import com.q.onboarding.demo.api.models.ContactDTO;
 import com.q.onboarding.demo.api.models.TaskDTO;
 import com.q.onboarding.demo.domain.models.Contact;
 import com.q.onboarding.demo.domain.models.Task;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class ModelConverterDefaultImpl implements ModelConverter {
 
   @Override
   public Task convertTaskDTOToDomainModel(TaskDTO dto) {
     return new Task(
-        dto.getId(),
         dto.getTitle(),
         dto.isCompleted(),
         convertContactDTOToDomainModel(dto.getContact()));
@@ -26,7 +25,6 @@ public class ModelConverterDefaultImpl implements ModelConverter {
   @Override
   public TaskDTO convertTaskDomainModelToDTO(Task model) {
     return new TaskDTO(
-        model.getId(),
         model.getTitle(),
         model.isCompleted(),
         convertContactDomainModelToDTO(model.getContact()));
