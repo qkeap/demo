@@ -4,9 +4,9 @@ import com.q.onboarding.demo.api.models.ContactDTO;
 import com.q.onboarding.demo.api.models.TaskDTO;
 import com.q.onboarding.demo.domain.models.Contact;
 import com.q.onboarding.demo.domain.models.Task;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class ModelConverterDefaultImpl implements ModelConverter {
 
   @Override
