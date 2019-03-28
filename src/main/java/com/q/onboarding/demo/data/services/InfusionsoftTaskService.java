@@ -15,9 +15,16 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class InfusionsoftTaskService implements TaskService {
   private static final String API_URI = "https://api.infusionsoft.com/crm/rest/v1/tasks";
+  private RestTemplate restTemplate;
+
+  public InfusionsoftTaskService() {
+    this.restTemplate = new RestTemplate();
+  }
+  public InfusionsoftTaskService(RestTemplate restTemplate) {
+    this.restTemplate = restTemplate;
+  }
 
   public Task addTask(Task task, String authorization) {
-    RestTemplate restTemplate = new RestTemplate();
     HttpHeaders headers = new HttpHeaders();
     headers.set("Authorization", authorization);
     headers.setContentType(MediaType.APPLICATION_JSON);
@@ -28,7 +35,6 @@ public class InfusionsoftTaskService implements TaskService {
   }
 
   public List<Task> getTasksForContact(long contactId, String authorization) {
-    RestTemplate restTemplate = new RestTemplate();
     HttpHeaders headers = new HttpHeaders();
     headers.set("Authorization", authorization);
     HttpEntity<?> request = new HttpEntity<>(headers);
