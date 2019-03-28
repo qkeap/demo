@@ -39,6 +39,7 @@ apply plugin: 'java'                              // standard Java tasks
 apply plugin: 'war'                               // standard Web Archive plugin
 apply plugin: 'com.google.cloud.tools.appengine'  // App Engine tasks
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'jacoco' // CodeCov support
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
@@ -87,6 +88,13 @@ test {
     }
     afterTest { descriptor, result ->
         logger.lifecycle("test: " + descriptor + ": " + result)
+    }
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled false
     }
 }
 // [END model]
