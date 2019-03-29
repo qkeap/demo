@@ -1,6 +1,5 @@
 package com.q.onboarding.demo.domain.models;
 
-
 public class Task {
   private String title;
   private boolean completed;
