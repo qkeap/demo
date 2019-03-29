@@ -19,6 +19,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
 
 public class InfusionSoftTaskServiceTests {
 
@@ -31,19 +32,27 @@ public class InfusionSoftTaskServiceTests {
     service = new InfusionsoftTaskService(restTemplate);
   }
 
-  // This is a contrived test to ensure the task controller goes through the motions
   @Test
-  public void addTaskSucceeds() {
+  public void addTaskSucceedsOnGoodRequest() {
     Task taskTemplate = new Task("test", false, null);
-    Mockito.doReturn(new ResponseEntity<>(taskTemplate, HttpStatus.OK))
+    Mockito.doReturn(new ResponseEntity<>(taskTemplate, HttpStatus.CREATED))
         .when(restTemplate)
         .exchange(anyString(), eq(HttpMethod.POST), anyObject(), eq(Task.class));
     Task task = service.addTask(taskTemplate, "");
     Assert.assertEquals(task, taskTemplate);
   }
 
+  @Test(expected = ResponseStatusException.class)
+  public void addTaskFailsOnBadRequest() {
+    Task taskTemplate = new Task("test", false, null);
+    Mockito.doReturn(new ResponseEntity<>(taskTemplate, HttpStatus.BAD_REQUEST))
+        .when(restTemplate)
+        .exchange(anyString(), eq(HttpMethod.POST), anyObject(), eq(Task.class));
+    service.addTask(taskTemplate, "");
+  }
+
   @Test
-  public void getTasksForContactSucceeds() {
+  public void getTasksForContactSucceedsOnGoodRequest() {
     PagingTaskList taskList = new PagingTaskList(Arrays.asList(new Task("test", false, null)));
     Mockito.doReturn(new ResponseEntity<>(taskList, HttpStatus.OK))
         .when(restTemplate)
@@ -51,5 +60,14 @@ public class InfusionSoftTaskServiceTests {
     List<Task> tasks = service.getTasksForContact(0, "");
     Assert.assertEquals(tasks, taskList.getTasks());
     Assert.assertEquals(tasks.size(), taskList.getTasks().size());
+  }
+
+  @Test(expected = ResponseStatusException.class)
+  public void getTasksForContactFailsOnBadRequest() {
+    PagingTaskList taskList = new PagingTaskList(Arrays.asList(new Task("test", false, null)));
+    Mockito.doReturn(new ResponseEntity<>(taskList, HttpStatus.BAD_REQUEST))
+        .when(restTemplate)
+        .exchange(anyString(), eq(HttpMethod.GET), anyObject(), eq(PagingTaskList.class));
+    service.getTasksForContact(0, "");
   }
 }
