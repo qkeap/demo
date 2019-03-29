@@ -4,6 +4,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 import com.q.onboarding.demo.api.models.ContactDTO;
 import com.q.onboarding.demo.api.models.TaskDTO;
+import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -44,10 +46,24 @@ public class TaskControllerIntegrationTests {
     HttpHeaders headers = new HttpHeaders();
     headers.add("Authorization", "Bearer " + accessToken);
     HttpEntity<?> httpEntity = new HttpEntity<>(taskDTOTemplate, headers);
-    ResponseEntity<TaskDTO> task =
+    ResponseEntity<TaskDTO> response =
         restTemplate.exchange(
             "http://localhost:" + port + "/task", HttpMethod.POST, httpEntity, TaskDTO.class);
-    Assert.assertEquals(task.getStatusCode(), HttpStatus.CREATED);
-    Assert.assertEquals(task.getBody().getTitle(), taskDTOTemplate.getTitle());
+    Assert.assertEquals(response.getStatusCode(), HttpStatus.CREATED);
+    Assert.assertEquals(response.getBody().getTitle(), taskDTOTemplate.getTitle());
+  }
+
+  @Test
+  public void getTasksForContactIntegrationSucceeds(){
+    RestTemplate restTemplate = new RestTemplate();
+    HttpHeaders headers = new HttpHeaders();
+    headers.add("Authorization", "Bearer " + accessToken);
+    HttpEntity<?> httpEntity = new HttpEntity<>(headers);
+    ResponseEntity<List<TaskDTO>> response =
+        restTemplate.exchange(
+            "http://localhost:" + port + "/task?contactId=1", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<TaskDTO>>(){});
+    Assert.assertEquals(response.getStatusCode(), HttpStatus.OK);
+    Assert.assertNotNull(response.getBody());
+    Assert.assertTrue(response.getBody().size() > 0);
   }
 }
