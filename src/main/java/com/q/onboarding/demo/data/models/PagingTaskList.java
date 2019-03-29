@@ -7,6 +7,9 @@ public class PagingTaskList {
   private List<Task> tasks;
 
   public PagingTaskList() {}
+  public PagingTaskList(List<Task> tasks) {
+    this.tasks = tasks;
+  }
 
   public List<Task> getTasks() {
     return tasks;
