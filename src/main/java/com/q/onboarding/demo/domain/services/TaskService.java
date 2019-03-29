@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface TaskService {
   Task addTask(Task task, String authorization) throws InfusionsoftServiceException;
+
   List<Task> getTasksForContact(long contactId, String authorization)
       throws InfusionsoftServiceException;
 }

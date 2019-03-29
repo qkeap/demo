@@ -23,8 +23,7 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @RunWith(SpringJUnit4ClassRunner.class)
 public class TaskControllerIntegrationTests {
-  @LocalServerPort
-  private String port;
+  @LocalServerPort private String port;
 
   @Value("${API_ACCESS_TOKEN:null}")
   private String accessToken;

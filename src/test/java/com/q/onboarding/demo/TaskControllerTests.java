@@ -60,7 +60,8 @@ public class TaskControllerTests {
   public void getTasksForContactSucceeds() throws InfusionsoftServiceException {
     when(modelConverter.convertTaskDTOToDomainModel(any(TaskDTO.class))).thenReturn(taskTemplate);
     when(modelConverter.convertTaskDomainModelToDTO(any(Task.class))).thenReturn(taskDTOTemplate);
-    when(service.getTasksForContact(anyLong(), anyString())).thenReturn(Arrays.asList(taskTemplate));
+    when(service.getTasksForContact(anyLong(), anyString()))
+        .thenReturn(Arrays.asList(taskTemplate));
     ResponseEntity<List<TaskDTO>> response = controller.getTasksForContact("", 0);
     Assert.assertEquals(response.getBody().get(0), taskDTOTemplate);
   }

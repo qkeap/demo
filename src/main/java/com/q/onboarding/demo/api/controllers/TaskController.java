@@ -30,7 +30,8 @@ public class TaskController {
   @PostMapping("/task")
   public ResponseEntity<TaskDTO> addTask(
       @RequestHeader(value = "Authorization") String authorization,
-      @Valid @RequestBody TaskDTO taskDTO) throws InfusionsoftServiceException {
+      @Valid @RequestBody TaskDTO taskDTO)
+      throws InfusionsoftServiceException {
     Task task =
         taskService.addTask(modelConverter.convertTaskDTOToDomainModel(taskDTO), authorization);
     return new ResponseEntity<>(

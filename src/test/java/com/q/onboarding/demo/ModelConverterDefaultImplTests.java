@@ -17,7 +17,7 @@ public class ModelConverterDefaultImplTests {
   private TaskDTO taskDTOTemplate;
 
   @Before
-  public void setup(){
+  public void setup() {
     converter = new ModelConverterDefaultImpl();
     taskTemplate = new Task("test", false, Mockito.mock(Contact.class));
     taskDTOTemplate = new TaskDTO("test", false, Mockito.mock(ContactDTO.class));
@@ -32,7 +32,7 @@ public class ModelConverterDefaultImplTests {
   }
 
   @Test
-  public void convertTaskDomainModelToDTOSucceedsOnValidData(){
+  public void convertTaskDomainModelToDTOSucceedsOnValidData() {
     Task task = converter.convertTaskDTOToDomainModel(taskDTOTemplate);
     Assert.assertEquals(task.getTitle(), taskDTOTemplate.getTitle());
     Assert.assertEquals(task.isCompleted(), taskDTOTemplate.isCompleted());
@@ -40,13 +40,13 @@ public class ModelConverterDefaultImplTests {
   }
 
   @Test(expected = NullPointerException.class)
-  public void convertTaskDomainModelToDTOFailsOnMissingContact(){
+  public void convertTaskDomainModelToDTOFailsOnMissingContact() {
     Task task = new Task("test", false, null);
     converter.convertTaskDomainModelToDTO(task);
   }
 
   @Test(expected = NullPointerException.class)
-  public void convertTaskDTOToDomainModelFailsOnMissingContact(){
+  public void convertTaskDTOToDomainModelFailsOnMissingContact() {
     TaskDTO dto = new TaskDTO("test", false, null);
     converter.convertTaskDTOToDomainModel(dto);
   }

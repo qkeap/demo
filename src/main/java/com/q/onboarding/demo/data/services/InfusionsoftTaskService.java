@@ -37,7 +37,8 @@ public class InfusionsoftTaskService implements TaskService {
       ResponseEntity<Task> response =
           restTemplate.exchange(API_URI, HttpMethod.POST, request, Task.class);
       if (response.getStatusCode() != HttpStatus.CREATED) {
-        throw new InfusionsoftServiceException("The data could not be saved\n" + response.toString());
+        throw new InfusionsoftServiceException(
+            "The data could not be saved\n" + response.toString());
       }
       return response.getBody();
     } catch (Exception ex) {
@@ -58,7 +59,8 @@ public class InfusionsoftTaskService implements TaskService {
               request,
               PagingTaskList.class);
       if (response.getStatusCode() != HttpStatus.OK) {
-        throw new InfusionsoftServiceException("The data could not be retrieved\n" + response.toString());
+        throw new InfusionsoftServiceException(
+            "The data could not be retrieved\n" + response.toString());
       }
       return response.getBody().getTasks();
     } catch (Exception ex) {
