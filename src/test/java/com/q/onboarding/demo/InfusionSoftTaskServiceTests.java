@@ -5,6 +5,7 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import com.q.onboarding.demo.data.InfusionsoftServiceException;
 import com.q.onboarding.demo.data.models.PagingTaskList;
 import com.q.onboarding.demo.data.services.InfusionsoftTaskService;
 import com.q.onboarding.demo.domain.models.Task;
@@ -33,7 +34,7 @@ public class InfusionSoftTaskServiceTests {
   }
 
   @Test
-  public void addTaskSucceedsOnGoodRequest() {
+  public void addTaskSucceedsOnGoodRequest() throws InfusionsoftServiceException {
     Task taskTemplate = new Task("test", false, null);
     Mockito.doReturn(new ResponseEntity<>(taskTemplate, HttpStatus.CREATED))
         .when(restTemplate)
@@ -42,8 +43,8 @@ public class InfusionSoftTaskServiceTests {
     Assert.assertEquals(task, taskTemplate);
   }
 
-  @Test(expected = ResponseStatusException.class)
-  public void addTaskFailsOnBadRequest() {
+  @Test(expected = InfusionsoftServiceException.class)
+  public void addTaskFailsOnBadRequest() throws InfusionsoftServiceException {
     Task taskTemplate = new Task("test", false, null);
     Mockito.doReturn(new ResponseEntity<>(taskTemplate, HttpStatus.BAD_REQUEST))
         .when(restTemplate)
@@ -52,7 +53,7 @@ public class InfusionSoftTaskServiceTests {
   }
 
   @Test
-  public void getTasksForContactSucceedsOnGoodRequest() {
+  public void getTasksForContactSucceedsOnGoodRequest() throws InfusionsoftServiceException {
     PagingTaskList taskList = new PagingTaskList(Arrays.asList(new Task("test", false, null)));
     Mockito.doReturn(new ResponseEntity<>(taskList, HttpStatus.OK))
         .when(restTemplate)
@@ -62,8 +63,8 @@ public class InfusionSoftTaskServiceTests {
     Assert.assertEquals(tasks.size(), taskList.getTasks().size());
   }
 
-  @Test(expected = ResponseStatusException.class)
-  public void getTasksForContactFailsOnBadRequest() {
+  @Test(expected = InfusionsoftServiceException.class)
+  public void getTasksForContactFailsOnBadRequest() throws InfusionsoftServiceException {
     PagingTaskList taskList = new PagingTaskList(Arrays.asList(new Task("test", false, null)));
     Mockito.doReturn(new ResponseEntity<>(taskList, HttpStatus.BAD_REQUEST))
         .when(restTemplate)

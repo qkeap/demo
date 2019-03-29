@@ -8,6 +8,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 import com.q.onboarding.demo.api.controllers.TaskController;
 import com.q.onboarding.demo.api.models.TaskDTO;
+import com.q.onboarding.demo.data.InfusionsoftServiceException;
 import com.q.onboarding.demo.domain.models.Task;
 import com.q.onboarding.demo.domain.services.ModelConverter;
 import com.q.onboarding.demo.domain.services.TaskService;
@@ -47,7 +48,7 @@ public class TaskControllerTests {
 
   // This is a contrived test to ensure the task controller goes through the motions
   @Test
-  public void addTaskSucceeds() {
+  public void addTaskSucceeds() throws InfusionsoftServiceException {
     when(service.addTask(any(Task.class), anyString())).thenReturn(taskTemplate);
     when(modelConverter.convertTaskDTOToDomainModel(any(TaskDTO.class))).thenReturn(taskTemplate);
     when(modelConverter.convertTaskDomainModelToDTO(any(Task.class))).thenReturn(taskDTOTemplate);
@@ -56,7 +57,7 @@ public class TaskControllerTests {
   }
 
   @Test
-  public void getTasksForContactSucceeds(){
+  public void getTasksForContactSucceeds() throws InfusionsoftServiceException {
     when(modelConverter.convertTaskDTOToDomainModel(any(TaskDTO.class))).thenReturn(taskTemplate);
     when(modelConverter.convertTaskDomainModelToDTO(any(Task.class))).thenReturn(taskDTOTemplate);
     when(service.getTasksForContact(anyLong(), anyString())).thenReturn(Arrays.asList(taskTemplate));

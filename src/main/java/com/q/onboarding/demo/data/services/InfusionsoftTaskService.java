@@ -1,5 +1,6 @@
 package com.q.onboarding.demo.data.services;
 
+import com.q.onboarding.demo.data.InfusionsoftServiceException;
 import com.q.onboarding.demo.data.models.PagingTaskList;
 import com.q.onboarding.demo.domain.models.Task;
 import com.q.onboarding.demo.domain.services.TaskService;
@@ -27,7 +28,7 @@ public class InfusionsoftTaskService implements TaskService {
     this.restTemplate = restTemplate;
   }
 
-  public Task addTask(Task task, String authorization) {
+  public Task addTask(Task task, String authorization) throws InfusionsoftServiceException {
     HttpHeaders headers = new HttpHeaders();
     headers.set("Authorization", authorization);
     headers.setContentType(MediaType.APPLICATION_JSON);
@@ -36,18 +37,16 @@ public class InfusionsoftTaskService implements TaskService {
       ResponseEntity<Task> response =
           restTemplate.exchange(API_URI, HttpMethod.POST, request, Task.class);
       if (response.getStatusCode() != HttpStatus.CREATED) {
-        throw new ResponseStatusException(
-            response.getStatusCode(), "The data could not be saved\n" + response.toString());
+        throw new InfusionsoftServiceException("The data could not be saved\n" + response.toString());
       }
       return response.getBody();
     } catch (Exception ex) {
-      throw new ResponseStatusException(
-          HttpStatus.INTERNAL_SERVER_ERROR,
-          "An error occurred processing the request\n" + ex.toString());
+      throw new InfusionsoftServiceException("An error occurred processing the request", ex);
     }
   }
 
-  public List<Task> getTasksForContact(long contactId, String authorization) {
+  public List<Task> getTasksForContact(long contactId, String authorization)
+      throws InfusionsoftServiceException {
     HttpHeaders headers = new HttpHeaders();
     headers.set("Authorization", authorization);
     HttpEntity<?> request = new HttpEntity<>(headers);
@@ -59,14 +58,11 @@ public class InfusionsoftTaskService implements TaskService {
               request,
               PagingTaskList.class);
       if (response.getStatusCode() != HttpStatus.OK) {
-        throw new ResponseStatusException(
-            response.getStatusCode(), "The data could not be retrieved\n" + response.toString());
+        throw new InfusionsoftServiceException("The data could not be retrieved\n" + response.toString());
       }
       return response.getBody().getTasks();
     } catch (Exception ex) {
-      throw new ResponseStatusException(
-          HttpStatus.INTERNAL_SERVER_ERROR,
-          "An error occurred processing the request\n" + ex.toString());
+      throw new InfusionsoftServiceException("An error occurred processing the request", ex);
     }
   }
 }

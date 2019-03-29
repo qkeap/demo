@@ -64,10 +64,6 @@ dependencies {
     testCompile 'com.google.appengine:appengine-tools-sdk:+'
 }
 
-// Always run unit tests
-appengineDeploy.dependsOn test
-appengineStage.dependsOn test
-
 // [START model]
 appengine {  // App Engine tasks configuration
     deploy {   // deploy configuration
