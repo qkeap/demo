@@ -1,6 +1,7 @@
 package com.q.onboarding.demo.api.controllers;
 
 import com.q.onboarding.demo.api.models.TaskDTO;
+import com.q.onboarding.demo.data.InfusionsoftServiceException;
 import com.q.onboarding.demo.domain.models.Task;
 import com.q.onboarding.demo.domain.services.ModelConverter;
 import com.q.onboarding.demo.domain.services.TaskService;
@@ -29,7 +30,8 @@ public class TaskController {
   @PostMapping("/task")
   public ResponseEntity<TaskDTO> addTask(
       @RequestHeader(value = "Authorization") String authorization,
-      @Valid @RequestBody TaskDTO taskDTO) {
+      @Valid @RequestBody TaskDTO taskDTO)
+      throws InfusionsoftServiceException {
     Task task =
         taskService.addTask(modelConverter.convertTaskDTOToDomainModel(taskDTO), authorization);
     return new ResponseEntity<>(
@@ -38,7 +40,8 @@ public class TaskController {
 
   @GetMapping("/task")
   public ResponseEntity<List<TaskDTO>> getTasksForContact(
-      @RequestHeader(value = "Authorization") String authorization, @RequestParam long contactId) {
+      @RequestHeader(value = "Authorization") String authorization, @RequestParam long contactId)
+      throws InfusionsoftServiceException {
 
     return new ResponseEntity<>(
         taskService.getTasksForContact(contactId, authorization).stream()
