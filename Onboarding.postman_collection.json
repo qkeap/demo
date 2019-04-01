@@ -1,0 +1,226 @@
+{
+	"info": {
+		"_postman_id": "72ddad31-58e2-45b2-9f22-d85633244059",
+		"name": "Onboarding",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Task (Happy Path)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"Test Task from Postman\",\n\t\"contact\": {\n\t\t\"id\": 88\n\t}\n}"
+				},
+				"url": {
+					"raw": "https://q-onboarding-demo-235020.appspot.com/task",
+					"protocol": "https",
+					"host": [
+						"q-onboarding-demo-235020",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"task"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Task (Sad Path: Auth)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"Test Task from Postman\",\n\t\"contact\": {\n\t\t\"id\": 88\n\t}\n}"
+				},
+				"url": {
+					"raw": "https://q-onboarding-demo-235020.appspot.com/task",
+					"protocol": "https",
+					"host": [
+						"q-onboarding-demo-235020",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"task"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Task (Sad Path)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"Test Task from Postman\",\n\t\"contact\": {}\n}"
+				},
+				"url": {
+					"raw": "https://q-onboarding-demo-235020.appspot.com/task",
+					"protocol": "https",
+					"host": [
+						"q-onboarding-demo-235020",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"task"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Tasks for User (Happy Path)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://q-onboarding-demo-235020.appspot.com/task?contactId=88",
+					"protocol": "https",
+					"host": [
+						"q-onboarding-demo-235020",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"task"
+					],
+					"query": [
+						{
+							"key": "contactId",
+							"value": "88"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Tasks for User (Sad Path: Auth)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{access_token}}",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://q-onboarding-demo-235020.appspot.com/task?contactId=88",
+					"protocol": "https",
+					"host": [
+						"q-onboarding-demo-235020",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"task"
+					],
+					"query": [
+						{
+							"key": "contactId",
+							"value": "88"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Tasks for User (Sad Path)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://q-onboarding-demo-235020.appspot.com/task?contactId=88",
+					"protocol": "https",
+					"host": [
+						"q-onboarding-demo-235020",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"task"
+					],
+					"query": [
+						{
+							"key": "contactId",
+							"value": "88"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
